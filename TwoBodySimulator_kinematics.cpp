@@ -1324,6 +1324,8 @@ bool Simulator::GetSX3Coord(Float_t& X, Float_t& Y, Float_t& Z, Float_t& Xpc, Fl
 		     Zpc = -10.0;
 		   else
 		     Zpc = zr - (rho_offset/tan(Theta));
+		   //01232019 Need to add a randomization to the Zpc based on our pc-z resolution from data:
+		   Zpc = rand->Gaus(Zpc,0.5);
 		 }
 
 	       /*cout << " wire: " << Wire_ID << " rho: " << rho << " phi_wire: " << phi_wire*180/TMath::Pi() 
@@ -1477,6 +1479,8 @@ bool Simulator::GetQQQ3FwdCoord(Float_t& X, Float_t& Y, Float_t& Z, Float_t& Xpc
 		  Zpc = -10.0;
 		else
 		  Zpc = zr - (rho_offset/tan(Theta));
+		//01232019 Need to add a randomization to the Zpc based on our pc-z resolution from data:
+		Zpc = rand->Gaus(Zpc,0.5);
 	      }
 	    /*cout << " wire: " << Wire_ID << " rho: " << rho << " phi_wire: " << phi_wire*180/TMath::Pi() 
 		<< " xr: " << xr << " yr: " << yr
@@ -1754,8 +1758,8 @@ bool Simulator::Kinematics_Rec(Float_t& Ex_Heavy_Rec, const Float_t& Ep_Rec,
   KE_Heavy_Rec = Heavy_LV.E()- Heavy_LV.M(); // .M()=sqrt(E^2-p^2) .E()=4th component of 4-vector, Energy
   Ex_Heavy_Rec = Heavy_LV.M() - M_Heavy;
 
-  if((Parent_LV.M()-M_Light-M_Heavy-Ex_Heavy_Rec + BeamEnergy)<=0)
-    cout << " Ex problem: " << Ex_Heavy_Rec << " Beam: " << BeamEnergy << " p_energy: " << ke_L_lab << endl;
+  //if((Parent_LV.M()-M_Light-M_Heavy-Ex_Heavy_Rec + BeamEnergy)<=0)
+  //cout << " Ex problem: " << Ex_Heavy_Rec << " Beam: " << BeamEnergy << " p_energy: " << ke_L_lab << endl;
   
  
    return 1;
